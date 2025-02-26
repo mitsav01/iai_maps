@@ -1,7 +1,9 @@
-
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(iai_maps)
 
-find_package(catkin)
+find_package(ament_cmake REQUIRED)
 
-catkin_package()
+install(DIRECTORY launch maps
+  DESTINATION share/${PROJECT_NAME})
+
+ament_package()

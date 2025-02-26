@@ -1,9 +1,9 @@
-
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.5)
 project(iai_kitchen_defs)
 
-find_package(catkin REQUIRED COMPONENTS xacro)
+find_package(ament_cmake REQUIRED)
 
-catkin_package(
-    DEPENDS xacro
-)
+install(DIRECTORY def Media room
+  DESTINATION share/${PROJECT_NAME})
+
+ament_package()

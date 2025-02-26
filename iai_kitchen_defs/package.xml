@@ -1,4 +1,5 @@
-<package>
+<?xml version="1.0"?>
+<package format="3">
   <name>iai_kitchen_defs</name>
   <version>1.0.0</version>
   <description>URDF description of the kitchen laboratory of the IAI in Bremen</description>
@@ -9,9 +10,16 @@
 
   <author>Jan Winkler</author>
 
-  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>ament_cmake</buildtool_depend>
+  <exec_depend>iai_cad_downloader</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>joint_state_publisher_gui</exec_depend>
+  <exec_depend>rviz2</exec_depend>
+  <exec_depend>urdf</exec_depend>
+  
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
 
-  <build_depend>xacro</build_depend>
-  <run_depend>xacro</run_depend>
 
 </package>
