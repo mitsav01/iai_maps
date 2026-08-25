@@ -1,4 +1,6 @@
 # https://github.com/mikedh/trimesh
+
+o IAIKitchenVisiblePartUppersideW80H39.obj
 v -0.00950000 -0.18550000 0.39900002
 v -0.00950000 0.18549997 0.39900002
 v -0.00950000 -0.18549997 -0.39900002
@@ -19,3 +21,4 @@ f 2 6 4
 f 4 6 8
 f 3 7 1
 f 1 7 5
+

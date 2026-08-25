@@ -8,3 +8,4 @@ owl/*.owl
 iai_dlr_cutting_demo/meshes
 iai_kitchen2/rviz_config/*
 
+.vscode

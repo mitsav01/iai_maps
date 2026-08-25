@@ -1,5 +1,18 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro" name="furnitures">
 
+  <material name="apartment_wall_gray">
+    <color rgba="0.80 0.80 0.80 1"/>
+  </material>
+  <material name="apartment_window_blue">
+    <color rgba="0.16 0.22 0.28 1"/>
+  </material>
+  <material name="apartment_metal_gray">
+    <color rgba="0.68 0.68 0.68 1"/>
+  </material>
+  <material name="apartment_wood_brown">
+    <color rgba="0.55 0.45 0.32 1"/>
+  </material>
+
   <xacro:macro name="kitchen_macro" params="name parent *origin">
 
     <joint name="${name}" type="fixed">
@@ -20,6 +33,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/walls.dae" />
         </geometry>
+        <material name="apartment_wall_gray"/>
       </visual>
       <!--collision>
           <geometry>
@@ -37,6 +51,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/windows.dae" />
         </geometry>
+        <material name="apartment_window_blue"/>
       </visual>
       <!--collision>
           <geometry>
@@ -113,6 +128,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/wardrobe.dae" />
         </geometry>
+        <material name="apartment_wall_gray"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="-0.2693 -0.4482 0.0750" />
@@ -217,6 +233,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/wardrobe_door_left.dae" />
         </geometry>
+        <material name="apartment_metal_gray"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="-0.006435 -0.2485 0.975" />
@@ -235,6 +252,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/wardrobe_door_handle.dae" />
         </geometry>
+        <material name="apartment_metal_gray"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0.010421 0 0.059003" />
@@ -267,6 +285,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/wardrobe_door_right.dae" />
         </geometry>
+        <material name="apartment_metal_gray"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="-0.006435 0.2485 0.975" />
@@ -285,6 +304,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/wardrobe_door_handle.dae" />
         </geometry>
+        <material name="apartment_metal_gray"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0.010421 0 0.059003" />
@@ -316,6 +336,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/armchair.dae" />
         </geometry>
+        <material name="apartment_metal_gray"/>
       </visual>
       <collision>
         <geometry>
@@ -333,6 +354,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/sofa.dae" />
         </geometry>
+        <material name="apartment_wall_gray"/>
       </visual>
       <collision>
         <geometry>
@@ -350,6 +372,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/coffee_table.dae" />
         </geometry>
+        <material name="apartment_wood_brown"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0.0000 0.0000 0.02977" />
@@ -399,6 +422,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/coffee_table_drawer.dae" />
         </geometry>
+        <material name="apartment_wood_brown"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="-0.338806 0.0000 0.21892" />
@@ -441,6 +465,7 @@
         <geometry>
           <mesh filename="package://iai_apartment/meshes/visual/bedside_table.dae" />
         </geometry>
+        <material name="apartment_wood_brown"/>
       </visual>
       <collision>
         <origin rpy="0 0 0" xyz="0.0000 0.0000 0.230" />

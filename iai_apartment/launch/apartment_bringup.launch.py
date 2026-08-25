@@ -1,14 +1,17 @@
+import os
+
 from launch import LaunchDescription
-from launch.actions import DeclareLaunchArgument
-from launch.substitutions import LaunchConfiguration, Command, PathJoinSubstitution
 from launch_ros.actions import Node
 from ament_index_python.packages import get_package_share_directory
 import xacro
 
+
 def generate_launch_description():
-    doc = xacro.process_file('/home/jdech/workspace/ros/src/iai_maps/iai_apartment/urdf/apartment.xacro')
+    package_dir = get_package_share_directory('iai_apartment')
+    apartment_xacro = os.path.join(package_dir, 'urdf', 'apartment.xacro')
+    doc = xacro.process_file(apartment_xacro)
     apartment_desc = doc.toprettyxml(indent='  ')
-    params = {"robot_description": apartment_desc} 
+    params = {"robot_description": apartment_desc}
 
     return LaunchDescription([
         Node(
