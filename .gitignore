@@ -9,3 +9,8 @@ iai_dlr_cutting_demo/meshes
 iai_kitchen2/rviz_config/*
 
 .vscode
+.idea/.gitignore
+.idea/iai_maps.iml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
