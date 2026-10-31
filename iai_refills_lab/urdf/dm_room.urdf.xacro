@@ -1,15 +1,50 @@
 <?xml version="1.0"?>
 <robot name="dm_room" xmlns:xacro="http://ros.org/wiki/xacro">
 
+  <!-- ================= Root Link ================= -->
+  <link name="room_link"/>
+
+  <!-- ================= Macro Includes ================= -->
   <xacro:include filename="$(find iai_refills_lab)/urdf/dm_shelf_macros.urdf.xacro"/>
-  <xacro:include filename="$(find iai_refills_lab)/urdf/dm_shelves.urdf.xacro"/>
 
-   <!-- <link name="room_link"/> -->
+  <!-- ================= Product Item Macro ================= -->
+  <xacro:macro name="product_item" params="name parent mesh_filename *origin mass:=0.2">
+    <link name="${name}">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iai_refills_lab/resources/${mesh_filename}"/>
+        </geometry>
+        <material name="${name}_mat">
+          <color rgba="0.85 0.85 0.85 1.0"/>
+        </material>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <mesh filename="package://iai_refills_lab/resources/${mesh_filename}"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${mass}"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0.0001" ixy="0.0" ixz="0.0"
+                 iyy="0.0001" iyz="0.0"
+                 izz="0.0001"/>
+      </inertial>
+    </link>
 
-  <!-- Left side shelves -->
-  <!-- <xacro:shelf_1 parent="room_link" name="xacro:shelf_1"> -->
-  <!--   <origin xyz="4.3223 -0.2415761 0.08515" rpy="0 0 -1.5756"/> -->
-  <!-- </xacro:shelf_1> -->
+    <joint name="${name}_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="${name}"/>
+      <xacro:insert_block name="origin"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- ================= Left Side Shelves ================= -->
+  <xacro:shelf_1 parent="room_link" name="shelf_1">
+    <origin xyz="4.3223 -0.2415761 0.08515" rpy="0 0 -1.5756"/>
+  </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_left_center_front">
     <origin xyz="4.3223 -1.2415761 0.08515" rpy="0 0 -1.5756"/>
@@ -23,11 +58,10 @@
     <origin xyz="4.3223 -3.2415761 0.08515" rpy="0 0 -1.5756"/>
   </xacro:shelf_1>
 
-
-  <!-- Center shelves -->
-  <!-- <xacro:shelf_2 parent="room_link" name="xacro:shelf_2"> -->
-  <!--   <origin xyz="1.75 -1.45 0.08515" rpy="0 0 3.09652"/> -->
-  <!-- </xacro:shelf_2> -->
+  <!-- ================= Center Shelves ================= -->
+  <xacro:shelf_2 parent="room_link" name="shelf_2">
+    <origin xyz="1.75 -1.45 0.08515" rpy="0 0 3.09652"/>
+  </xacro:shelf_2>
 
   <xacro:shelf_2 parent="room_link" name="shelf_center_front_middle">
     <origin xyz="0.75 -1.4 0.08515" rpy="0 0 3.09652"/>
@@ -49,34 +83,32 @@
     <origin xyz="-0.27 -1.9 0.08515" rpy="0 0 -3.18666530718"/>
   </xacro:shelf_2>
 
-
-  <!-- Back shelves -->
+  <!-- ================= Back Shelves ================= -->
   <xacro:shelf_1 parent="room_link" name="shelf_back_1">
-    <origin xyz="3 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="3.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_back_2">
-    <origin xyz="2 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="2.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_back_3">
-    <origin xyz="1 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="1.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_back_4">
-    <origin xyz="0 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="0.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_back_5">
-    <origin xyz="-1 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="-1.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
   <xacro:shelf_1 parent="room_link" name="shelf_back_6">
-    <origin xyz="-2 -4.3 0.08515" rpy="0 0 ${pi}"/>
+    <origin xyz="-2.0 -4.3 0.08515" rpy="0 0 ${pi}"/>
   </xacro:shelf_1>
 
-
-  <!--Right side shelves -->
+  <!-- ================= Right Side Shelves ================= -->
   <xacro:shelf_1 parent="room_link" name="shelf_right_front">
     <origin xyz="-2.6 -1.0 0.08515" rpy="0 0 1.5756"/>
   </xacro:shelf_1>
@@ -90,31 +122,272 @@
   </xacro:shelf_1>
 
 
-  <!-- xacro:walls -->
+  <!-- ================= Shelf 1 Down Side (level_0) Products ================= -->
+  <xacro:product_item name="domestos_cleaner"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="domestos_allzweckreiniger.stl">
+    <origin xyz="-0.43 -0.20 0.15" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="sagrotan_cleaner"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="sagrotan_allzweckreiniger.stl">
+    <origin xyz="-0.30 -0.20 0.15" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_allzweck"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="denkmit_allzweckreiniger.stl">
+    <origin xyz="-0.14 -0.20 0.14" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_frueling"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="denkmit_allzweckreiniger_frueling.stl">
+    <origin xyz="0.01 -0.20 0.15" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="meister_proper"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="meister_proper_allzweckreiniger.stl">
+    <origin xyz="0.15 -0.20 0.15" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_limette"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="denkmit_allzweckreiniger_limette.stl">
+    <origin xyz="0.29 -0.20 0.145" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="der_general"
+                      parent="shelf_1_level_0_link"
+                      mesh_filename="der_general_allzweckreiniger.stl">
+    <origin xyz="0.42 -0.20 0.13" rpy="0 0 0"/>
+  </xacro:product_item>
+
+
+  <!-- ================= Upper Products on shelf_2 ================= -->
+
+  <!-- shelf_2: level_5 -->
+  <xacro:product_item name="denkmit_edelstahl_spray"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="denkmit_edelstahl_reiniger_spray.stl">
+    <origin xyz="-0.36 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_edelstahl"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="denkmit_edelstahl_reiniger.stl">
+    <origin xyz="-0.28 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_glaskeramik"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="denkmit_glaskeramik_reiniger.stl">
+    <origin xyz="-0.19 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_masch_entkalker"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="denkmit_maschienen_entkalker.stl">
+    <origin xyz="-0.03 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_entkalker"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="denkmit_entkalker.stl">
+    <origin xyz="0.14 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="kuehne_essig"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="kuehne_essig_essenz.stl">
+    <origin xyz="0.23 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="heitmann_citron"
+                      parent="shelf_2_shelf_2_level_5_link"
+                      mesh_filename="heitmann_citronensaeure.stl">
+    <origin xyz="0.32 -0.14 0.11" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <!-- shelf_2: level_4 -->
+  <xacro:product_item name="finish_deo"
+                      parent="shelf_2_shelf_2_level_4_link"
+                      mesh_filename="finish_deo.stl">
+    <origin xyz="-0.43 -0.14 0.11" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_quantum"
+                      parent="shelf_2_shelf_2_level_4_link"
+                      mesh_filename="finish_spuelmaschienen_tabs_quantum.stl">
+    <origin xyz="-0.26 -0.14 0.11" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_tabs_classic"
+                      parent="shelf_2_shelf_2_level_4_link"
+                      mesh_filename="finish_spuelmaschienen_tabs_classic.stl">
+    <origin xyz="0.17 -0.14 0.13" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_vorratspack"
+                      parent="shelf_2_shelf_2_level_4_link"
+                      mesh_filename="finish_spuelmaschienen_tabs_classic_vorratspack.stl">
+    <origin xyz="0.38 -0.14 0.16" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <!-- shelf_2: level_3 -->
+  <xacro:product_item name="finish_pulver"
+                      parent="shelf_2_shelf_2_level_3_link"
+                      mesh_filename="finish_spuelmaschienen_pulver.stl">
+    <origin xyz="-0.38 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_protector"
+                      parent="shelf_2_shelf_2_level_3_link"
+                      mesh_filename="finish_spuelmaschienen_protector.stl">
+    <origin xyz="-0.22 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="balea_bottle"
+                      parent="shelf_2_shelf_2_level_3_link"
+                      mesh_filename="balea-bottle.stl">
+    <origin xyz="-0.08 -0.14 0.10" rpy="0 0 ${pi/2}"/>
+  </xacro:product_item>
+
+  <!-- Grounded Dove Body Wash -->
+  <xacro:product_item name="dove_bodywash"
+                      parent="shelf_2_shelf_2_level_3_link"
+                      mesh_filename="dove.stl">
+    <origin xyz="0.08 -0.14 0.025" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="dish_washer_tabs"
+                      parent="shelf_2_shelf_2_level_3_link"
+                      mesh_filename="dish-washer-tabs.stl">
+    <origin xyz="0.25 -0.13 0.11" rpy="0 0 ${pi/2}"/>
+  </xacro:product_item>
+
+  <!-- shelf_2: level_2 (Decongested Denkmit Row) -->
+  <xacro:product_item name="denkmit_spezialsalz"
+                      parent="shelf_2_shelf_2_level_2_link"
+                      mesh_filename="denkmit_spezialsalz.stl">
+    <origin xyz="-0.36 -0.14 0.13" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_tabs_power"
+                      parent="shelf_2_shelf_2_level_2_link"
+                      mesh_filename="denkmit_spuelmaschienen_tabs_power.stl">
+    <origin xyz="-0.18 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_tabs_rev"
+                      parent="shelf_2_shelf_2_level_2_link"
+                      mesh_filename="denkmit_spuelmaschienen_tabs_revolution.stl">
+    <origin xyz="0.00 -0.14 0.12" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_tabs_classic"
+                      parent="shelf_2_shelf_2_level_2_link"
+                      mesh_filename="denkmit_spuelmaschienen_tabs_classic.stl">
+    <origin xyz="0.18 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_tabs_nature"
+                      parent="shelf_2_shelf_2_level_2_link"
+                      mesh_filename="denkmit_spuelmaschienen_tabs_nature.stl">
+    <origin xyz="0.36 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <!-- shelf_2: level_1 -->
+  <xacro:product_item name="denkmit_pfleger_1"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="denkmit_maschienenpfleger.stl">
+    <origin xyz="-0.31 -0.14 0.08" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_pfleger_2"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="denkmit_maschienenpfleger.stl">
+    <origin xyz="-0.25 -0.14 0.08" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_pfleger"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="finish_maschienenpfleger.stl">
+    <origin xyz="-0.175 -0.14 0.09" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_spezialsalz"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="finish_spezialsalz.stl">
+    <origin xyz="-0.05 -0.14 0.13" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="finish_klarspueler"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="finish_klarspueler.stl">
+    <origin xyz="0.082 -0.14 0.15" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="denkmit_tabs_allinone"
+                      parent="shelf_2_shelf_2_level_1_link"
+                      mesh_filename="denkmit_spuelmaschienen_tabs_allinone.stl">
+    <origin xyz="0.203 -0.14 0.14" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <!-- shelf_2: level_0 (Relocated Somat Products) -->
+  <xacro:product_item name="somat_tabs_extra"
+                      parent="shelf_2_level_0_link"
+                      mesh_filename="somat_spuelmaschienen_tabs_extra.stl">
+    <origin xyz="-0.22 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="somat_tabs_classic"
+                      parent="shelf_2_level_0_link"
+                      mesh_filename="somat_spuelmaschienen_tabs_classic.stl">
+    <origin xyz="0.00 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+  <xacro:product_item name="somat_pulver"
+                      parent="shelf_2_level_0_link"
+                      mesh_filename="somat_spuelmaschienen_pulver.stl">
+    <origin xyz="0.22 -0.14 0.10" rpy="0 0 0"/>
+  </xacro:product_item>
+
+
+  <!-- ================= Perimeter Walls ================= -->
   <xacro:property name="wall_thickness" value="0.2" />
   <xacro:property name="wall_height" value="2.4" />
+
   <xacro:wall parent="room_link" name="back_wall"
-        size="8.0 ${wall_thickness} ${wall_height}">
+              size="8.0 ${wall_thickness} ${wall_height}">
     <origin xyz="1.0 -5.0 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
   <xacro:wall parent="room_link" name="left_wall"
-        size="${wall_thickness} 9.6 ${wall_height}">
+              size="${wall_thickness} 9.6 ${wall_height}">
     <origin xyz="5.0 -0.3 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
   <xacro:wall parent="room_link" name="front_wall"
-        size="5.0 ${wall_thickness} ${wall_height}">
+              size="5.0 ${wall_thickness} ${wall_height}">
     <origin xyz="2.5 4.6 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
   <xacro:wall parent="room_link" name="right_wall"
-        size="${wall_thickness} 5.0 ${wall_height}">
+              size="${wall_thickness} 5.0 ${wall_height}">
     <origin xyz="-3.0 -2.5 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
   <xacro:wall parent="room_link" name="back_corner_wall"
-        size="3.0 ${wall_thickness} ${wall_height}">
+              size="3.0 ${wall_thickness} ${wall_height}">
     <origin xyz="-1.5 0.0 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
   <xacro:wall parent="room_link" name="right_corner_wall"
-        size="${wall_thickness} 4.6 ${wall_height}">
-    <origin xyz="0 2.3 ${wall_height/2}" rpy="0 0 0"/>
+              size="${wall_thickness} 4.6 ${wall_height}">
+    <origin xyz="0.0 2.3 ${wall_height/2}" rpy="0 0 0"/>
   </xacro:wall>
+
 </robot>
